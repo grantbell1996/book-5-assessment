@@ -2,22 +2,31 @@ import { getSides, setSide } from "./database.js"
 
 const sideDishes = getSides()
 
-document.addEventListener("change", (event) => {
-    if (event.target.name === "sideDish") {
-        setSide(parseInt(event.target.value))
-    }
-})
+const currentSide = setSide()
 
-// Requirement: The radio input elements that this component funcion renders must all have a name of "sideDish"
+document.addEventListener(
+    "change", 
+    (event) => {
+        if (event.target.name === "sideDish") {
+            setSide(parseInt(event.target.value))
+        }
+    }
+)
+
+// Requirement: The radio input elements that this component function renders must all have a name of "sideDish"
 export const Sides = () => {
     let html = "<ul>"
 
-    const listItems = sideDishes.map(dish => {
-        return `<li>
-            <input type="radio" />
-        </li>`
-    })
-
+    // Use .map() for converting objects to <li> elements
+    const listItems = sideDishes.map(
+        (sideDish) => {
+            return `<li>
+                <input type="radio" name="sideDish" value="${sideDish.id}" /> ${sideDish.title}
+            </li>`
+        }
+    )
+    
+    // Join all of the strings in the array into a single string
     html += listItems.join("")
     html += "</ul>"
 
